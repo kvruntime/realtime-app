@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 
 namespace api.Hubs
@@ -17,7 +13,7 @@ namespace api.Hubs
             MessageHistory.Add(userMessage);
             await Clients.Others.SendAsync("RecieveMessage", senderId, content, userMessage);
         }
-        public async Task RetrieveMessageHistory(string Text)
+        public async Task RetrieveMessageHistory()
         {
             await Clients.Caller.SendAsync("MessageHistory", MessageHistory);
         }

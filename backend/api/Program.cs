@@ -9,13 +9,15 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddSignalR();
 
+var devCors = "devCors";
+string[] devHosts = new string[] { "http://localhost:3000" };
 if (builder.Environment.IsDevelopment())
 {
     builder.Services.AddCors(options =>
     {
-        options.AddDefaultPolicy(policy =>
+        options.AddPolicy(devCors, policy =>
         {
-            policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+            policy.WithOrigins(devHosts).AllowAnyMethod().AllowAnyHeader().AllowCredentials();
         });
     });
 }
@@ -27,7 +29,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    app.UseCors();
+    app.UseCors(devCors);
 }
 
 // app.UseHttpsRedirection();
